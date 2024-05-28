@@ -51,6 +51,7 @@ SERVER_TYPES = (
     'gemini',
     'hf',
     'mamba',
+    "hf_longrope"
 )
 
 
@@ -67,6 +68,7 @@ parser.add_argument("--task", type=str, required=True, help='Options: tasks in b
 parser.add_argument("--subset", type=str, default='validation', help='Options: validation or test')
 parser.add_argument("--chunk_idx", type=int, default=0, help='index of current split chunk')
 parser.add_argument("--chunk_amount", type=int, default=1, help='size of split chunk')
+parser.add_argument("--max_position_embeddings", type=int, default=4096, help='max_position_embeddings')
 
 # Server
 parser.add_argument("--server_type", default='nemo', action=ServerAction, choices=SERVER_TYPES)
@@ -84,7 +86,7 @@ parser.add_argument("--top_p", type=float, default=1.0)
 parser.add_argument("--random_seed", type=int, default=0)
 parser.add_argument("--stop_words", type=str, default='')
 parser.add_argument("--sliding_window_size", type=int)
-parser.add_argument("--threads", type=int, default=4)
+parser.add_argument("--threads", type=int, default=1)
 
 args = parser.parse_args()
 args.stop_words = list(filter(None, args.stop_words.split(',')))
@@ -160,6 +162,20 @@ def get_llm(tokens_to_generate):
             max_new_tokens=tokens_to_generate,
         )
     
+    elif args.server_type == 'hf_longrope':
+        print("using longrope!!! It may not be stable right now.")
+        from model_wrappers import HuggingFaceModel_longrope
+        llm = HuggingFaceModel_longrope(
+            name_or_path=args.model_name_or_path,
+            do_sample=args.temperature > 0,
+            repetition_penalty=1,
+            temperature=args.temperature,
+            top_k=args.top_k,
+            top_p=args.top_p,
+            stop=args.stop_words,
+            max_new_tokens=tokens_to_generate,
+            max_position_embeddings=args.max_position_embeddings
+        )
     elif args.server_type == 'mamba':
         from model_wrappers import MambaModel
         # mamba uses its own generation function, do not pass in do_sample
@@ -200,7 +216,7 @@ def main():
         
     config = tasks_customized.get(args.task)
     config.update(tasks_base[config['task']])
-
+    print(config)
     task_file = args.data_dir / args.task / f'{args.subset}.jsonl'
     
     if args.chunk_amount > 1:

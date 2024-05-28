@@ -16,13 +16,14 @@ TEMPERATURE="0.0" # greedy
 TOP_P="1.0"
 TOP_K="32"
 SEQ_LENGTHS=(
-    131072
-    65536
-    32768
-    16384
-    8192
     4096
+    8192
+    16384
+    32768
+    65536
+    131072
 )
+
 
 MODEL_SELECT() {
     MODEL_NAME=$1
@@ -30,6 +31,96 @@ MODEL_SELECT() {
     ENGINE_DIR=$3
     
     case $MODEL_NAME in
+        Phi3_1-mini-rope4_8)       
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-rope4_8"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-rope5_5a)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-rope5_5a"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-rope5_4)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-rope5_4"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-rope5_2)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-rope5_2"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-rope4_4)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-rope4_4"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-rope3_3)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-rope3_3"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-PTRC1_71L)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-PTRC1_71L"
+        MODEL_TEMPLATE_TYPE="Phi3.1"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-PTRC1_70L)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-PTRC1_70L"
+        MODEL_TEMPLATE_TYPE="Phi3.1"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi-3-mini-128k-instruct)
+        MODEL_PATH="${MODEL_DIR}/Phi-3-mini-128k-instruct"
+        MODEL_TEMPLATE_TYPE="Phi-3-mini-128k-instruct"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3_1-mini-PTRC1_42L)
+        MODEL_PATH="${MODEL_DIR}/Phi3_1-mini-PTRC1_42L"
+        MODEL_TEMPLATE_TYPE="Phi3.1"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Mistral-7B-Instruct-v0.2)
+        MODEL_PATH="${MODEL_DIR}/Mistral-7B-Instruct-v0.2"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m5)
+        MODEL_PATH="${MODEL_DIR}/phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m5"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf_longrope"
+        ;;
+        phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m4)
+        MODEL_PATH="${MODEL_DIR}/phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m4"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf_longrope"
+        ;;
+        phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m2)
+        MODEL_PATH="${MODEL_DIR}/phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m2"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf_longrope"
+        ;;
+        phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m1)
+        MODEL_PATH="${MODEL_DIR}/phi-3-3_8b_longrope_128k_swa128k_redpajama_v2_m1"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf_longrope"
+        ;;
+        phi-3-3_8b_longrope_128k_swa128k_redpajama_dm_64_1000)
+        MODEL_PATH="${MODEL_DIR}/phi-3-3_8b_longrope_128k_swa128k_redpajama_dm_64_1000"
+        MODEL_TEMPLATE_TYPE="base"
+        MODEL_FRAMEWORK="hf_longrope"
+        ;;
+        Phi3-internal)
+        MODEL_PATH="${MODEL_DIR}/phi3.8b"
+        MODEL_TEMPLATE_TYPE="Phi3-internal"
+        MODEL_FRAMEWORK="hf"
+        ;;
+        Phi3-internal-wobos)
+        MODEL_PATH="${MODEL_DIR}/phi3.8b-wobos"
+        MODEL_TEMPLATE_TYPE="Phi3-internal-wobos"
+        MODEL_FRAMEWORK="hf"
+        ;;
         llama2-7b-chat)
             MODEL_PATH="${MODEL_DIR}/llama2-7b-chat-hf"
             MODEL_TEMPLATE_TYPE="meta-chat"
